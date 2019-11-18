@@ -1,0 +1,32 @@
+<ul>
+  <li><a [routerLink]="['']">Home</a></li>
+  <li><span>Auth</span></li>
+  <li>
+    <ul>
+      <li><a [routerLink]="['auth', 'signin']">Sign in</a></li>
+      <li><a [routerLink]="['auth', 'signup']">Sign up</a></li>
+      <li><a [routerLink]="['auth', 'signout']">Sign out</a></li>
+    </ul>
+  </li>
+  <li><a [routerLink]="['anon-allow']">Anonymouse Allow</a></li>
+  <li><a [routerLink]="['auth-allow-a']">Auth Allow A</a></li>
+  <li><a [routerLink]="['auth-allow-b']">Auth Allow B</a></li>
+  <li><a [routerLink]="['anon-pages']">Anonymouse pages</a></li>
+  <li><a [routerLink]="['auth-pages']">Auth pages</a></li>
+  <li>
+    <ul>
+      <li><a [routerLink]="['auth-pages/example-a']">Auth pages Example A</a></li>
+      <li><a [routerLink]="['auth-pages/example-b']">Auth pages Example B</a></li>
+    </ul>
+  </li>
+  <li><a [routerLink]="['auth-pages-child']">Auth pages child</a></li>
+  <li>
+    <ul>
+      <li><a [routerLink]="['auth-pages-child/example-c']">Auth pages child Example C</a></li>
+      <li><a [routerLink]="['auth-pages-child/example-d']">Auth pages child Example D</a></li>
+    </ul>
+  </li>
+</ul>
+
+
+<router-outlet></router-outlet>

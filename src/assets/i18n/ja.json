@@ -1,0 +1,16 @@
+{
+  "innerHTML": {
+    "利用規約に同意する": "<a href=\"#\" target=\"_blank\"><strong>利用規約</strong></a>に同意する"
+  },
+  "AuthErrors": {
+    "UsernameExistsException": "アカウントは登録済みです。",
+    "UserNotFoundException": "アカウントが見つかりません。",
+    "InvalidParameterException": "",
+    "NotAuthorizedException": {
+      "Incorrect username or password.": "メールアドレスまたはパスワードに誤りがあります。"
+    }
+  },
+  "VerifyCodeErrors": {
+    "CodeMismatchException": "確認コードが誤っています。"
+  }
+}

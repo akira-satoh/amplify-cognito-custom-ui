@@ -1,0 +1,152 @@
+<h1 id="title" class="title" translate>サインアップ</h1>
+<nb-alert *ngIf="errorMessage" status="danger">{{ errorMessage }}</nb-alert>
+
+<nb-flip-card #flipCard [showToggleButton]="false">
+  <nb-card-front>
+    <nb-card>
+
+      <nb-card-body>
+        <form (ngSubmit)="signUp()" aria-labelledby="title">
+  
+          <div class="form-control-group" *ngIf="username">
+            <label class="label" for="input-name">ユーザー名:</label>
+            <input nbInput [formControl]="username" id="input-name" name="username" placeholder="{{ 'ユーザー名' | translate }}"
+              autofocus fullWidth fieldSize="large" [status]="username.dirty ? (username.invalid  ? 'danger' : 'success') : ''"
+              [required]="true" [maxlength]="50" [attr.aria-invalid]="username.invalid && username.touched ? true : null">
+            <ng-container *ngIf="username.invalid && username.touched">
+              <small class="caption status-danger" *ngIf="username.hasError('required')">
+                ユーザー名は必須です。
+              </small>
+              <small class="caption status-danger" *ngIf="username.hasError('minlength') || username.hasError('maxlength')">
+                ユーザー名は50文字以内としてください。
+              </small>
+            </ng-container>
+          </div>
+  
+          <div class="form-control-group" *ngIf="email">
+            <label class="label" for="input-email" translate>メールアドレス:</label>
+            <input nbInput [formControl]="email" id="input-email" name="email" pattern=".+@.+..+"
+              placeholder="{{ 'メールアドレス' | translate }}" fullWidth fieldSize="large"
+              [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : ''" [required]="true"
+              [attr.aria-invalid]="email.invalid && email.touched ? true : null">
+            <ng-container *ngIf="email.invalid && email.touched">
+              <small class="caption status-danger" *ngIf="email.hasError('required')">
+                メールアドレスは必須です。
+              </small>
+              <small class="caption status-danger" *ngIf="email.hasError('pattern')">
+                メールアドレスではありません。
+              </small>
+            </ng-container>
+          </div>
+  
+          <div class="form-control-group" *ngIf="phoneNumber">
+            <label class="label" for="input-phoneNumber" translate>電話番号:</label>
+            <input nbInput [formControl]="phoneNumber" id="input-phoneNumber" name="phoneNumber"
+              placeholder="{{ '電話番号' | translate }}" fullWidth fieldSize="large"
+              [status]="phoneNumber.dirty ? (phoneNumber.invalid  ? 'danger' : 'success') : ''" [required]="true"
+              [attr.aria-invalid]="phoneNumber.invalid && phoneNumber.touched ? true : null">
+            <ng-container *ngIf="phoneNumber.invalid && phoneNumber.touched">
+              <small class="caption status-danger" *ngIf="phoneNumber.hasError('required')">
+                電話番号は必須です。
+              </small>
+            </ng-container>
+          </div>
+  
+          <div class="form-control-group">
+            <label class="label" for="input-password" translate>パスワード:</label>
+            <input nbInput [formControl]="password" type="password" id="input-password" name="password"
+              placeholder="{{ 'パスワード' | translate }}" fullWidth fieldSize="large"
+              [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : ''" [required]="true"
+              [minlength]="passwordMinLength" [maxlength]="32"
+              [attr.aria-invalid]="password.invalid && password.touched ? true : null">
+            <ng-container *ngIf="password.invalid && password.touched">
+              <small class="caption status-danger" *ngIf="password.hasError('required')" translate>
+                パスワードは必須です。
+              </small>
+              <small class="caption status-danger" *ngIf="password.hasError('minlength') || password.hasError('maxlength')"
+                translate>
+                パスワードは{{passwordMinLength}}文字以上32文字以内としてください。
+              </small>
+            </ng-container>
+          </div>
+  
+          <div class="form-control-group">
+            <label class="label" for="input-re-password" translate>パスワード（もう一度入力してください）:</label>
+            <input nbInput [formControl]="confirmPassword" type="password" id="input-re-password" name="rePass"
+              placeholder="{{ 'パスワード（もう一度入力してください）' | translate }}" fullWidth fieldSize="large"
+              [status]="confirmPassword.dirty ? (confirmPassword.invalid || password.value != confirmPassword.value  ? 'danger' : 'success') : ''"
+              [required]="true" [attr.aria-invalid]="confirmPassword.invalid && confirmPassword.touched ? true : null">
+            <ng-container *ngIf="confirmPassword.invalid && confirmPassword.touched">
+              <small class="caption status-danger" *ngIf="confirmPassword.hasError('required')" translate>
+                パスワードは必須です。
+              </small>
+              <small class="caption status-danger" *ngIf="confirmPassword.hasError('different')" translate>
+                パスワードが同じ入力ではありません。
+              </small>
+            </ng-container>
+          </div>
+  
+          <div class="form-control-group accept-group" *ngIf="terms">
+            <nb-checkbox name="terms" [formControl]="terms" [required]="true">
+              <span [innerHTML]="'innerHTML.利用規約に同意する' | translate"></span>
+            </nb-checkbox>
+          </div>
+  
+          <button nbButton fullWidth status="primary" size="large" [disabled]="submitted || !form.valid"
+            [class.btn-pulse]="submitted">
+            <span translate>サインアップ</span>
+          </button>
+        </form>
+  
+        <section *ngIf="socialLinks && socialLinks.length > 0" class="links" aria-label="Social sign in">
+          <div class="socials">
+            <ng-container *ngFor="let socialLink of socialLinks">
+              <a *ngIf="socialLink.link" [routerLink]="socialLink.link" [attr.target]="socialLink.target"
+                [attr.class]="socialLink.icon" [class.with-icon]="socialLink.icon">
+                <nb-icon *ngIf="socialLink.icon; else title" [icon]="socialLink.icon"></nb-icon>
+                <ng-template #title>{{ socialLink.title }}</ng-template>
+              </a>
+              <a *ngIf="socialLink.url" [attr.href]="socialLink.url" [attr.target]="socialLink.target"
+                [attr.class]="socialLink.icon" [class.with-icon]="socialLink.icon">
+                <nb-icon *ngIf="socialLink.icon; else title" [icon]="socialLink.icon"></nb-icon>
+                <ng-template #title>{{ socialLink.title }}</ng-template>
+              </a>
+            </ng-container>
+          </div>
+        </section>
+  
+      </nb-card-body>
+    </nb-card>
+  </nb-card-front>
+  <nb-card-back>
+    <nb-card>
+      <nb-card-body>
+        <form (ngSubmit)="confirmVerifyCode($event)" aria-labelledby="title">
+          <p translate>
+            確認コードを含むテキストメッセージを送信しました。
+          </p>
+          <div class="form-control-group" *ngIf="verifyCode">
+            <label class="label" for="input-name" translate>確認コードを入力してください</label>
+            <input nbInput [formControl]="verifyCode" id="input-verifyCode" name="verifyCode" placeholder="{{ '確認コード' | translate }}"
+              autofocus fullWidth fieldSize="large" [status]="verifyCode.dirty ? (verifyCode.invalid  ? 'danger' : 'success') : ''"
+              [required]="true" [minLength]="6" [maxLength]="6" [attr.aria-invalid]="verifyCode.invalid && verifyCode.touched ? true : null">
+            <ng-container *ngIf="verifyCode.invalid && verifyCode.touched">
+              <small class="caption status-danger">
+                コードが違います。
+              </small>
+            </ng-container>
+          </div>
+          <button nbButton fullWidth status="primary" size="large" [disabled]="submitted || !form.valid"
+            [class.btn-pulse]="submitted">
+            <span translate>送信</span>
+          </button>
+        </form>
+      </nb-card-body>
+
+    </nb-card>
+  </nb-card-back>
+</nb-flip-card>
+
+<section class="another-action" [attr.aria-label]="'サインイン' | translate">
+  <span translate>アカウントを持っていますか？</span> <a class="text-link" routerLink="../signin">サインイン</a>
+</section>
