@@ -1,31 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignoutComponent } from './signout.component';
-import { NbAlertModule } from '@nebular/theme';
-import { RouterTestingModule } from '@angular/router/testing';
+import { IdpComponent } from './idp.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { AmplifyService } from 'aws-amplify-angular';
 import { NEBULAR_MODULES } from '../auth.module';
+import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 
-describe('SignoutComponent', () => {
-  let component: SignoutComponent;
-  let fixture: ComponentFixture<SignoutComponent>;
+describe('IdpComponent', () => {
+  let component: IdpComponent;
+  let fixture: ComponentFixture<IdpComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        BrowserModule,
         CommonModule,
+        TranslateModule.forRoot(),
         RouterTestingModule,
-        ...NEBULAR_MODULES,
+        ...NEBULAR_MODULES
       ],
-      declarations: [ SignoutComponent ]
+      declarations: [ IdpComponent ],
+      providers: [AmplifyService]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SignoutComponent);
+    fixture = TestBed.createComponent(IdpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

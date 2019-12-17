@@ -35,9 +35,9 @@ export class RequestPasswordComponent implements OnInit {
   errorMessage: string;
 
   /** 送信中 */
-  submitted: boolean = false;
+  submitted = false;
   /** リクエスト完了 */
-  completed: boolean = false;
+  completed = false;
 
   /**
    * パスワード最小長
@@ -49,7 +49,7 @@ export class RequestPasswordComponent implements OnInit {
   constructor(fb: FormBuilder,
     private authService: AuthService,
     private translateService: TranslateService) {
-    this.username = fb.control('')
+    this.username = fb.control('', [ Validators.required ])
     //有効フィールド
     const availableFields = environment.auth.fields
     //多要素認証

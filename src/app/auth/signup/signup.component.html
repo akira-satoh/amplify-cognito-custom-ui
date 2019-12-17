@@ -100,18 +100,18 @@
   
         <section *ngIf="socialLinks && socialLinks.length > 0" class="links" aria-label="Social sign in">
           <div class="socials">
-            <ng-container *ngFor="let socialLink of socialLinks">
+            <div *ngFor="let socialLink of socialLinks">
               <a *ngIf="socialLink.link" [routerLink]="socialLink.link" [attr.target]="socialLink.target"
                 [attr.class]="socialLink.icon" [class.with-icon]="socialLink.icon">
-                <nb-icon *ngIf="socialLink.icon; else title" [icon]="socialLink.icon"></nb-icon>
-                <ng-template #title>{{ socialLink.title }}</ng-template>
+                <nb-icon *ngIf="socialLink.icon" [icon]="socialLink.icon"></nb-icon>
+                <span class="social-title">{{ socialLink.title }}</span>
               </a>
               <a *ngIf="socialLink.url" [attr.href]="socialLink.url" [attr.target]="socialLink.target"
                 [attr.class]="socialLink.icon" [class.with-icon]="socialLink.icon">
-                <nb-icon *ngIf="socialLink.icon; else title" [icon]="socialLink.icon"></nb-icon>
-                <ng-template #title>{{ socialLink.title }}</ng-template>
+                <nb-icon *ngIf="socialLink.icon" [icon]="socialLink.icon"></nb-icon>
+                <span class="social-title">{{ socialLink.title }}</span>
               </a>
-            </ng-container>
+            </div>
           </div>
         </section>
   

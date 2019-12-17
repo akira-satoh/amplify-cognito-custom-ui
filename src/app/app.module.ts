@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbMenuModule, NbUserModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { AmplifyAngularModule, AmplifyService } from 'aws-amplify-angular';
 
@@ -19,6 +19,15 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+export const NEBULAR_MOBULES = [
+  NbThemeModule.forRoot({ name: 'default' }),
+  NbLayoutModule,
+  NbEvaIconsModule,
+  NbMenuModule.forRoot(),
+  NbSidebarModule.forRoot(),
+  NbUserModule,
+]
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,9 +38,6 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NbThemeModule.forRoot({ name: 'default' }),
-    NbLayoutModule,
-    NbEvaIconsModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -39,7 +45,8 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: createTranslateLoader,
         deps: [HttpClient]
       }
-    })
+    }),
+    ...NEBULAR_MOBULES
   ],
   providers: [AmplifyService],
   bootstrap: [AppComponent]

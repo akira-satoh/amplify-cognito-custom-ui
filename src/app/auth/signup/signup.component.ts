@@ -94,6 +94,12 @@ export class SignupComponent {
     this.form.addControl('confirmPassword', this.confirmPassword)
     this.form.addControl('terms', this.terms)
     //this.form.addControl('verifyCode', this.verifyCode)
+
+    this.socialLinks.push({
+      title: 'Googleでログイン',
+      icon: 'google',
+      link: '../idp/google',
+    });
   }
 
   /**

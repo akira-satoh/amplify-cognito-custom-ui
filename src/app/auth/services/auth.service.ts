@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core'
 import { AmplifyService } from 'aws-amplify-angular'
-import { SignInOpts, SignUpParams } from '@aws-amplify/auth/lib/types'
+import { SignInOpts, SignUpParams, CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types'
 import { Auth } from 'aws-amplify'
 import { CognitoUser } from '@aws-amplify/auth'
 import { BehaviorSubject } from 'rxjs'
+import { Cache, Hub } from 'aws-amplify';
+import { access } from 'fs'
 
 export type ChallengeNames = 'SMS_MFA' | 'SOFTWARE_TOKEN_MFA' | 'NEW_PASSWORD_REQUIRED' | 'MFA_SETUP'
 export type SignUpErrors = 'UsernameExistsException'
@@ -32,6 +34,31 @@ export class AuthService {
           this.user = authState.user
         }
       })
+
+    Hub.listen('auth', ({ payload: { event, data } }) => {
+      switch (event) {
+        case 'signIn':
+          console.log(event, data)
+          this.signedIn = true
+          this.user = data
+          //属性取得するために再取得
+          Auth.currentAuthenticatedUser()
+            .then(user => {
+              this.user = user
+            })
+            .catch(err => console.log(err))
+          break
+        case 'signOut':
+          console.log(event, data)
+          this.signedIn = false
+          this.user = null
+          break
+        case 'customOAuthStategnIn':
+          console.log(event, data)
+          break
+      }
+    })
+
   }
 
   /**
@@ -218,4 +245,38 @@ export class AuthService {
   public async resendVerifyCode(username: string) {
     return await Auth.resendSignUp(username)
   }
+
+  /**
+   * Googleサインイン
+   */
+  public signInGoogle() {
+    return Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google })
+  }
+  /**
+   * Facebookサインイン
+   */
+  public signInFacebook() {
+    return Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Facebook })
+  }
+  /**
+   * Amazonサインイン
+   */
+  public signInAmazon() {
+    return Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Amazon })
+  }
+  /**
+   * Cognitoサインイン
+   */
+  public signInCognito() {
+    return Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Cognito })
+  }
+
+  /**
+   * 
+   * @param code 
+   */
+  refreshToken(code: string) {
+    console.debug(window['gapi'])
+  }
+
 }

@@ -7,6 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { SignoutComponent } from './signout/signout.component';
 import { NbAuthComponent } from '@nebular/auth';
 import { RequestPasswordComponent } from './request-password/request-password.component';
+import { IdpComponent } from './idp/idp.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'signup', component: SignupComponent },
       { path: 'signout', component: SignoutComponent },
       { path: 'request-password', component: RequestPasswordComponent },
+      { path: 'idp/:provider', component: IdpComponent },
     ]
   },
 ];
